@@ -1,9 +1,10 @@
 var client = ShopifyBuy.buildClient({
-    accessToken: '4d7415c180725ab4c41f2e8f67b947b5',
-    domain: 'mobstar-clothing.myshopify.com',
+    accessToken: '', // TODO: insert buy sdk access token 
+    domain: '', // Insert domain url example: example.myshopify.com
     appId: '6'
 });
 
+// DOM elements for top cart
 var total = $('.subtotal');
 var itemCount = $('.item-count');
 var productDiv = $('#product-div');
@@ -14,10 +15,6 @@ var checkout = $('.checkout-btn');
 
 client.fetchRecentCart().then(function(cart) {
     function updateCart(item) {
-        console.log(item);
-        let time = new Date();
-        time = time.getHours() + '-' + time.getMinutes() + '-' + time.getMilliseconds();
-        console.log(time);
 
         cartContents.append(`
 							<li>
@@ -66,7 +63,6 @@ client.fetchRecentCart().then(function(cart) {
             var variantId = $(this).attr('variant-id')
 
             var qty = $('#productQuantity' + variantId).val();
-            console.log(qty);
             cart.updateLineItem(itemId, qty);
 
             cartContents.empty();
@@ -74,7 +70,6 @@ client.fetchRecentCart().then(function(cart) {
             cart.lineItems.forEach(updateCart);
             total.text('$ ' + cart.subtotal);
             itemCount.text(cart.lineItemCount + ' ITEM(S)');
-            console.log(cart.subtotal);
         });
 
         $('.remove-item').click(function() {
@@ -87,7 +82,6 @@ client.fetchRecentCart().then(function(cart) {
             cart.lineItems.forEach(updateCart);
             total.text('$ ' + cart.subtotal);
             itemCount.text(cart.lineItemCount + ' ITEM(S)');
-            console.log(cart.subtotal);
         });
     }
 
